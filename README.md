@@ -13,3 +13,6 @@ pip install -r requirements.txt
 ```bash
 python bioparser.py
 ```
+
+
+P.S не пытайтесь редактировать) 
