@@ -106,6 +106,23 @@ def process_page(
         new_page.show_pdf_page(
             Rect(0, 0, rect.width, rect.height), doc, page_num, clip=rect
         )
+        clean_page(new_page, rect)
+
+
+def clean_page(new_page: Page, rect: Rect) -> None:
+    """
+    Функция для очистки элементов за границей страницы.
+
+    :param new_page: страница, которую нужно очистить
+    :param rect: прямоугольник, который нужно оставить (по сути вся страница)
+    :return: None
+    """
+    new_page.add_redact_annot(Rect(rect.width, - rect.height * 10, rect.width * 10, rect.height * 10))
+    new_page.add_redact_annot(Rect(0, - rect.height * 10, -rect.width * 10, rect.height * 10))
+    new_page.add_redact_annot(Rect(0, 0, rect.width, -rect.height * 10))
+    new_page.add_redact_annot(Rect(0, rect.height, rect.width, rect.height * 10))
+    new_page.apply_redactions()
+
 
 if __name__ == "__main__":
     main(SOURCE_PATH, OUTPUT_DIR)
