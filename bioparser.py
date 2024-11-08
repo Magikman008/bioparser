@@ -1,8 +1,8 @@
 import os
 from typing import List
 
-import fitz
-from pymupdf import Rect, Page
+import pymupdf
+from pymupdf import Rect, Page, Document
 import logging
 
 # Пожалуйста, не убирайте r
@@ -55,8 +55,8 @@ def main(pdf_path: str, output_dir: str) -> None:
     """
     logger.info(f"Открытие исходного PDF файла: {pdf_path}")
 
-    doc = fitz.open(pdf_path)
-    new_pdf = fitz.open()
+    doc = pymupdf.open(pdf_path)
+    new_pdf = pymupdf.open()
 
     if output_dir.strip() == "":
         logger.warning(
@@ -83,7 +83,7 @@ def main(pdf_path: str, output_dir: str) -> None:
     )
 
 def process_page(
-    doc: fitz.open, new_pdf: fitz.open, page: Page, page_num: int
+    doc: Document, new_pdf: Document, page: Page, page_num: int
 ) -> None:
     """
     Обрабатывает страницу, находит прямоугольники и копирует содержимое
